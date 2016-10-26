@@ -74,7 +74,9 @@ io.sockets.on('connection', function (socket) {
       socket.username = data.name;
       board.push({
         player: data.name,
-        ships: data.ships        
+        ships: data.ships,
+        cellCount: data.cellCount,
+        hitCount: 0
       });    
       console.log(board);
       console.log('req from ' + socket.username);
@@ -85,9 +87,9 @@ io.sockets.on('connection', function (socket) {
     // console.log(socket.username);
     // if matches, check the other board
     if (socket.username === board[0].player) {
-      checkMove(data, board[1].ships);
+      checkMove(data, board[1]);
     } else {
-      checkMove(data, board[0].ships);
+      checkMove(data, board[0]);
     }
   })
 
@@ -95,16 +97,16 @@ io.sockets.on('connection', function (socket) {
 
 
 
-  function checkMove(targetedCell, ships) {
+  function checkMove(targetedCell, board) {
     console.log(targetedCell);
     var miss = true;
-    ships.forEach(function(ship) {      
+
+    board.ships.forEach(function(ship) {      
       if (isInArray(targetedCell, ship.coordinates)) {        
         miss = false;
+
         var hits = ship.hits;
         ship.hits = hits + 1;
-        console.log(ship.hits);
-        console.log(ship.maxHits);
         if (ship.hits >= ship.maxHits) {
           miss = undefined;
           socket.emit('sunk', ship.ship);
@@ -122,6 +124,11 @@ io.sockets.on('connection', function (socket) {
       socket.broadcast.emit('gotHit', targetedCell);
       console.log('Hit!');
     }
+
+    // if (hitCount >= cellCount) {
+    //   socket.emit('you win');
+    //   socket.broadcast.emit('you lose');
+    // }
   }
 
   function isInArray(value, array) {

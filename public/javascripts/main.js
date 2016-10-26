@@ -34,6 +34,7 @@ $(function() {
   var ships = [];  
   var coordinates = [];
   var count, ship;
+  var cellCount = 0;
 
   $('.ship').on('click', function() {
     count = parseInt($(this).attr('holes'));
@@ -43,7 +44,8 @@ $(function() {
 
   $('.cell').on('click', function() {    
     $(this).css('background-color', 'blue');
-    coordinates.push($(this).attr('id'))    
+    coordinates.push($(this).attr('id'));
+    cellCount++;
   });
 
   $('.save').on('click', function() {
@@ -54,17 +56,15 @@ $(function() {
       hits: 0
     });    
     console.log(ships);
-  })
+  });
   
-
-
-
   // Send board to server
   $('#submitBoard').on('click', function() {
     var name = $('#playerName').val();
     socket.emit('submitBoard', {
       name: name, 
-      ships: ships      
+      ships: ships,
+      cellCount: cellCount
     });
     console.log(ships);
     $('#player').html(name);
@@ -121,10 +121,12 @@ $(function() {
 
   socket.on('sunk', function(data) {
     console.log('you sunk ' + data);
+    $('table#tablePlay').find('td#'+data).html('X');
   });
 
   socket.on('gotSunk', function(data) {
     console.log(data + ' was sunk');
+    $('table#table').find('td#'+data).html('X');
   });
 
 
