@@ -101,6 +101,9 @@ io.sockets.on('connection', function (socket) {
     ships.forEach(function(ship) {      
       if (isInArray(targetedCell, ship.coordinates)) {        
         miss = false;
+        var hits = ship.hits;
+        ship.hits = hits + 1;
+        console.log(ship.hits)
       }
     });
     if (miss===true) {
@@ -110,8 +113,6 @@ io.sockets.on('connection', function (socket) {
     } else {
       socket.emit('hit', targetedCell);
       socket.broadcast.emit('gotHit', targetedCell);
-      // ship.hits+=ship.hits;
-      // console.log(ship.hits);
       console.log('Hit!');
     }
   }
