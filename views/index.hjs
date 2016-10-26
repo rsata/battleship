@@ -25,7 +25,7 @@
           <li class='ship' id="battleship_4" holes="4">battleship_4<button class="save">save</button></li>
           <li class='ship' id="cruiser_3" holes="3">cruiser_3<button class="save">save</button></li>
           <li class='ship' id="sub_3" holes="3">sub_3<button class="save">save</button></li>
-          <li class='ship' id="destroyer_1" holes="1">destroyer_1<button class="save">save</button></li>
+          <li class='ship' id="destroyer_2" holes="2">destroyer_2<button class="save">save</button></li>
         </ul>
       </div>
 

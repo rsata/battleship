@@ -103,14 +103,21 @@ io.sockets.on('connection', function (socket) {
         miss = false;
         var hits = ship.hits;
         ship.hits = hits + 1;
-        console.log(ship.hits)
+        console.log(ship.hits);
+        console.log(ship.maxHits);
+        if (ship.hits >= ship.maxHits) {
+          miss = undefined;
+          socket.emit('sunk', ship.ship);
+          socket.broadcast.emit('gotSunk', ship.ship)
+        }
       }
     });
+
     if (miss===true) {
       console.log('Miss!');
       socket.emit('miss', targetedCell);
       socket.broadcast.emit('gotMissed', targetedCell);
-    } else {
+    } else if (miss===false) {
       socket.emit('hit', targetedCell);
       socket.broadcast.emit('gotHit', targetedCell);
       console.log('Hit!');

@@ -119,6 +119,14 @@ $(function() {
     $('table#table').find('td#'+data).html('O');
   });
 
+  socket.on('sunk', function(data) {
+    console.log('you sunk ' + data);
+  });
+
+  socket.on('gotSunk', function(data) {
+    console.log(data + ' was sunk');
+  });
+
 
   // Turn off a third player
 
