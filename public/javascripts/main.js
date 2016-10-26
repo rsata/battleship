@@ -120,13 +120,13 @@ $(function() {
   });
 
   socket.on('sunk', function(data) {
-    console.log('you sunk ' + data);
-    $('table#tablePlay').find('td#'+data).html('X');
+    console.log('you sunk ' + data.ship);
+    $('table#tablePlay').find('td#'+data.targetedCell).html('X');
   });
 
   socket.on('gotSunk', function(data) {
-    console.log(data + ' was sunk');
-    $('table#table').find('td#'+data).html('X');
+    console.log(data.ship + ' was sunk');
+    $('table#table').find('td#'+data.targetedCell).html('X');
   });
 
 

@@ -109,8 +109,9 @@ io.sockets.on('connection', function (socket) {
         ship.hits = hits + 1;
         if (ship.hits >= ship.maxHits) {
           miss = undefined;
-          socket.emit('sunk', ship.ship);
-          socket.broadcast.emit('gotSunk', ship.ship)
+          var obj = {ship: ship.ship, targetedCell: targetedCell}
+          socket.emit('sunk', obj);
+          socket.broadcast.emit('gotSunk', obj)
         }
       }
     });
