@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
+    <script src="./javascripts/main.js"></script>
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <h1 id="player"></h1>        
+
+      <div class="game">
+        <table id="tablePlay"></table>
+      </div>
+
+      <div class="setup">
+        <input type="text" id="playerName">
+        <table id="table"></table>
+        <button id="submitBoard">Begin Game</button>
+        <ul>
+          <li class='ship' id="carrier_5" holes="5">carrier_5<button class="save">save</button></li>
+          <li class='ship' id="battleship_4" holes="4">battleship_4<button class="save">save</button></li>
+          <li class='ship' id="cruiser_3" holes="3">cruiser_3<button class="save">save</button></li>
+          <li class='ship' id="sub_3" holes="3">sub_3<button class="save">save</button></li>
+          <li class='ship' id="destroyer_1" holes="1">destroyer_1<button class="save">save</button></li>
+        </ul>
+      </div>
+
+    </div>    
+
+  </body>
+  </html>

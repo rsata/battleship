@@ -1,0 +1,45 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#table > tr > td {
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
+
+#tablePlay > tr > td {
+  height: 30px;
+  width: 30px;
+  background-color: #888;
+}
+
+td:hover {
+  background-color: blue;
+}
+
+td {
+  color: white;
+}
+
+.tableContainer {
+  display: block;
+  float: right;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+// .game {
+//   float: right;
+// }
+
+// .setup {
+//   float: left;
+// }
