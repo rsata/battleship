@@ -27,6 +27,7 @@ app.get('/', function(req, res) {
 // DB
 var numPlayers = 0;
 var board = [];
+var lastMoved = undefined;
 
 io.sockets.on('connection', function (socket) {
 
@@ -48,17 +49,27 @@ io.sockets.on('connection', function (socket) {
         targetedCells: []
       });
       console.log(socket.username + 'submitted board \nBoard: ' + board);
+      console.log(socket.id);
     }    
   });
 
   // When player makes a move
   socket.on('move', function(data) {
+
+    if (lastMoved === socket.id) {
+      socket.emit('doubleMoveNotAllowed');
+      return undefined;
+    }
+
     // if player name matches first board, i.e. it is their own board, check the other board
     if (socket.username === board[0].player) {
       checkMove(socket, data, board[1]);
     } else {
       checkMove(socket, data, board[0]);
     }
+
+    // Set last move to player that just moved
+    lastMoved = socket.id;
   })
 });
 

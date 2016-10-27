@@ -186,6 +186,10 @@ $(function() {
     alert('You have already targeted that cell.');
   });
 
+  socket.on('doubleMoveNotAllowed', function() {
+    alert('Please wait for other player to move before going again.');
+  });
+
   socket.on('hit', function(data) {
     // Mark the hit cell with an X
     $('table#tablePlay').find('td#'+data).html('X');

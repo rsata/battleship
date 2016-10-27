@@ -44,45 +44,38 @@ var board = [
   }
 ];
 
-// var io = require('socket.io-client');
 
-// var socket = io.connect('http://localhost:3000', {
-//   'reconnection delay' : 0,
-//   'reopen delay' : 0,
-//   'force new connection' : true
-// });
+var io = require('socket.io-client')
 
 describe('check move function', function() {
 
-  it('yaya', function() {
-    var io = require('socket.io-client');
-    var options = {
-      transports: ['websocket'],
-      'force new connection': true,
-      path: '/'
-    };
-    var client = io("http://localhost:3000", options);
-    client.on('connect', function () {
-      console.log('connected')
-      done();
+  it('hit count should increment', function() {
+    var socket = io.connect('http://localhost:3000', {
+      'reconnection delay' : 0,
+      'reopen delay' : 0,
+      'force new connection' : true
     });
-  });
 
-  // socket.on('connect', function () {
-  //   var input = board[1].hitCount;
-  //   var output = checkMove(socket, 23, board[0]);
-  //   it('hit count should increment', function() {
-  //     expect(input).to.equal(output[0].hitCount-1);
+    socket.on('connect', function () {
+      console.log('connection successful');
+      var input = board[1].hitCount;
+      var output = checkMove(socket, 23, board[0]);
+      expect(input).to.equal(output[0].hitCount-1);      
+    });
+  }); 
+
+  // it('yaya', function() {
+  //   var io = require('socket.io-client');
+  //   var options = {
+  //     transports: ['websocket'],
+  //     'force new connection': true,
+  //     path: '/'
+  //   };
+  //   var client = io("http://localhost:3000", options);
+  //   client.on('connect', function () {
+  //     console.log('connected')
+  //     done();
   //   });
-  //   done();
-  // }); 
-
-
-
-  
-
-
-  
-
+  // });
 
 });
