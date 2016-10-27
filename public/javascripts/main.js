@@ -117,19 +117,14 @@ $(function() {
       return undefined;
     }
 
-    // Set name
-    var name = $('#playerName').val();
-
     // Send board to server
     socket.emit('submitBoard', {
-      name: name, 
       ships: ships,
       cellCount: cellCount
     });
 
     // Visual - setup for playing
     $('#player').html(name);
-    $('input#playerName').remove();
     $('button#submitBoard').remove();
     $('td').removeClass('cell'); // so that can't add new blue cells after starting game
     $('#tablePlay').removeClass('hide');

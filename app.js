@@ -40,16 +40,14 @@ io.sockets.on('connection', function (socket) {
       socket.emit('shutdown')
     } else {
       // If not too many players, add board
-      socket.username = data.name;
       board.push({
-        player: data.name,
+        id: socket.id,
         ships: data.ships,
         cellCount: data.cellCount,
         hitCount: 0,
         targetedCells: []
       });
-      console.log(socket.username + 'submitted board \nBoard: ' + board);
-      console.log(socket.id);
+      console.log(socket.id + 'submitted board \nBoard: ' + board);
     }    
   });
 
@@ -62,7 +60,7 @@ io.sockets.on('connection', function (socket) {
     }
 
     // if player name matches first board, i.e. it is their own board, check the other board
-    if (socket.username === board[0].player) {
+    if (socket.id === board[0].id) {
       checkMove(socket, data, board[1]);
     } else {
       checkMove(socket, data, board[0]);

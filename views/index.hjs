@@ -10,8 +10,6 @@
   <body>
 
     <div class="wrapper">
-      <h1 id="player"></h1>       
-      <input type="text" id="playerName" placeholder="Enter Name"> 
 
       <div class="game">
         <table id="tablePlay" class="hide"></table>
