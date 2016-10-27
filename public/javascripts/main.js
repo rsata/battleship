@@ -66,7 +66,7 @@ $(function() {
   $('.cell').on('click', function() {
     // Check if ship already on clicked cell, if ship is selected, if max number of cells already selected for ship
     if (isInArray($(this).attr('id'), selectedCells) || ship === undefined || counter >= count) {
-      alert("You need to select a ship.  Ships on the board cannot overlap.  Place the correct number of spots on the board for each ship.");
+      alert("You need to select a ship.  Ships on the board cannot overlap.  Select the correct number of cells on the board for each ship.");
       return undefined;
     }
 
@@ -218,11 +218,11 @@ $(function() {
   });
 
   socket.on('youWin', function(data) {
-    alert('You Win!');
+    alert('You Win :)');
   });
 
   socket.on('youLose', function(data) {
-    alert('You Lose!');
+    alert('You Lose :(');
   });
 
 
