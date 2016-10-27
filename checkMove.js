@@ -25,14 +25,20 @@ module.exports = function (socket, targetedCell, board) {
 
       // Check if the number of hits on the ship is equal to the entire ship i.e. the ship is sunk
       if (ship.hits >= ship.maxHits) {
-        var obj = {ship: ship.ship, targetedCell: targetedCell}
+        console.log('sunk')
 
+        // Need to send the ship that was destroyed and the cell that was targeted
+        var obj = {ship: ship.ship, targetedCell: targetedCell}
+        
         // If sunk, notify clients
         socket.emit('sunk', obj);
         socket.broadcast.emit('gotSunk', obj);
 
         // If this was last ship sunk, game is over and notify clients
         if (board.hitCount >= board.cellCount) {
+          console.log('game over')
+
+          // Notify clients of end of game
           socket.emit('youWin');
           socket.broadcast.emit('youLose');
         }
@@ -48,16 +54,17 @@ module.exports = function (socket, targetedCell, board) {
     socket.emit('miss', targetedCell);
     socket.broadcast.emit('gotMissed', targetedCell);
   } else if (miss===false) {
-    // If it was not a miss, it was a hit
     console.log('Hit!');
 
     // Notify clients of hit
     socket.emit('hit', targetedCell);
     socket.broadcast.emit('gotHit', targetedCell);
   }
-  
+
   function cellAlreadyTaken(targetedCell, targetedCells) {
     if (isInArray(targetedCell, targetedCells)) {
+      console.log('Cell already targeted')
+
       socket.emit('cellAlreadyTaken');
       return true;
     }
