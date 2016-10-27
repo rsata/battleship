@@ -186,29 +186,35 @@ $(function() {
     alert('You have already targeted that cell.');
   });
 
-  socket.on('hit', function(data) {    
+  socket.on('hit', function(data) {
+    // Mark the hit cell with an X
     $('table#tablePlay').find('td#'+data).html('X');
   });
 
-  socket.on('gotHit', function(data) {    
+  socket.on('gotHit', function(data) {  
+    // Mark the hit cell with an X  
     $('table#table').find('td#'+data).html('X');
   });
 
-  socket.on('miss', function(data) {    
+  socket.on('miss', function(data) {  
+    // Mark the hit cell with an O  
     $('table#tablePlay').find('td#'+data).html('O');
   });
 
-  socket.on('gotMissed', function(data) {    
+  socket.on('gotMissed', function(data) {
+    // Mark the hit cell with an O  
     $('table#table').find('td#'+data).html('O');
   });
 
   socket.on('sunk', function(data) {
     alert('you sunk ' + data.ship);
+    // Mark the hit cell with an X
     $('table#tablePlay').find('td#'+data.targetedCell).html('X');
   });
 
   socket.on('gotSunk', function(data) {
     alert(data.ship + ' was sunk');
+    // Mark the hit cell with an X
     $('table#table').find('td#'+data.targetedCell).html('X');
   });
 
@@ -228,7 +234,7 @@ $(function() {
       NO THIRD PLAYER
   
   ***/
-  
+
   socket.on('shutdown', function() {
     $('.wrapper').remove();
     $('body').html('<h1>Sorry, max players is 2</h1>')
