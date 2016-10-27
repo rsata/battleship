@@ -28,6 +28,10 @@ td {
   float: right;
 }
 
+.selected {
+  background-color: #888;
+}
+
 .hide {
   display: none;
 }
@@ -35,11 +39,3 @@ td {
 .show {
   display: block;
 }
-
-// .game {
-//   float: right;
-// }
-
-// .setup {
-//   float: left;
-// }

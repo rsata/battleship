@@ -10,23 +10,26 @@
   <body>
 
     <div class="wrapper">
-      <h1 id="player"></h1>        
+      <h1 id="player"></h1>       
+      <input type="text" id="playerName" placeholder="Enter Name"> 
 
       <div class="game">
-        <table id="tablePlay"></table>
+        <table id="tablePlay" class="hide"></table>
       </div>
 
-      <div class="setup">
-        <input type="text" id="playerName">
+      <ul id='shipList'>
+        <li class='ship' id="carrier_5" holes="5">carrier (5)</li>
+        <li class='ship' id="battleship_4" holes="4">battleship (4)</li>
+        <li class='ship' id="cruiser_3" holes="3">cruiser (3)</li>
+        <li class='ship' id="sub_3" holes="3">sub (3)</li>
+        <li class='ship' id="destroyer_2" holes="2">destroyer (2)</li>
+      </ul>
+      <button class="save">Save</button>
+      <button class="reset">Reset</button>
+
+      <div class="setup">        
         <table id="table"></table>
-        <button id="submitBoard">Begin Game</button>
-        <ul>
-          <li class='ship' id="carrier_5" holes="5">carrier_5<button class="save">save</button></li>
-          <li class='ship' id="battleship_4" holes="4">battleship_4<button class="save">save</button></li>
-          <li class='ship' id="cruiser_3" holes="3">cruiser_3<button class="save">save</button></li>
-          <li class='ship' id="sub_3" holes="3">sub_3<button class="save">save</button></li>
-          <li class='ship' id="destroyer_2" holes="2">destroyer_2<button class="save">save</button></li>
-        </ul>
+        <button id="submitBoard">Begin Game</button>        
       </div>
 
     </div>    

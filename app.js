@@ -26,65 +26,31 @@ app.get('/', function(req, res) {
 // DB
 var numPlayers = 0;
 var board = [];
-// var board = [
-//   {
-//     player: 1,
-//     ships: [
-//       {
-//         coordinates: [09,19,29,39,49],
-//         hits: 0,
-//         maxHits: 5,
-//         ship: 'carrier_5'
-//       },
-//       {
-//         coordinates: [03,13,23,33,43],
-//         hits: 0,
-//         maxHits: 5,
-//         ship: 'carrier_5'
-//       }
-//     ]
-//   },
-//   {
-//     player: 2,
-//     ships: [{
-//         coordinates: [12,13,14],
-//         hits: 0,
-//         maxHits: 5,
-//         ship: 'carrier_5'
-//       },
-//       {
-//         coordinates: [45,46],
-//         hits: 0,
-//         maxHits: 5,
-//         ship: 'carrier_5'
-//       }
-//     ]
-//   }
-// ];
-
 
 io.sockets.on('connection', function (socket) {
 
+  // When board is submitted by a player
   socket.on('submitBoard', function(data) {
+    // Check to see if too many players
     numPlayers++;
     if (numPlayers>2) {
       console.log('sorry, max players is 2');
       socket.emit('shutdown')
     } else {
+      // If not too many players, add board
       socket.username = data.name;
       board.push({
         player: data.name,
         ships: data.ships,
         cellCount: data.cellCount,
-        hitCount: 0
-      });    
-      console.log(board);
-      console.log('req from ' + socket.username);
+        hitCount: 0,
+        targetedCells: []
+      });
+      console.log(socket.username + 'submitted board \nBoard: ' + board);
     }    
   });
 
   socket.on('move', function(data) {
-    // console.log(socket.username);
     // if matches, check the other board
     if (socket.username === board[0].player) {
       checkMove(data, board[1]);
@@ -94,24 +60,33 @@ io.sockets.on('connection', function (socket) {
   })
 
 
-
-
-
   function checkMove(targetedCell, board) {
-    console.log(targetedCell);
+    // console.log(targetedCell);
     var miss = true;
 
-    board.ships.forEach(function(ship) {      
+    if(cellAlreadyTaken(targetedCell, board.targetedCells)) return undefined;
+
+    board.targetedCells.push(targetedCell);
+
+    board.ships.forEach(function(ship) {
+
+      // If ship is hit      
       if (isInArray(targetedCell, ship.coordinates)) {        
         miss = false;
+        board.hitCount++;
 
         var hits = ship.hits;
         ship.hits = hits + 1;
         if (ship.hits >= ship.maxHits) {
-          miss = undefined;
+          // miss = undefined;
           var obj = {ship: ship.ship, targetedCell: targetedCell}
           socket.emit('sunk', obj);
-          socket.broadcast.emit('gotSunk', obj)
+          socket.broadcast.emit('gotSunk', obj);
+
+          if (board.hitCount >= board.cellCount) {
+            socket.emit('youWin');
+            socket.broadcast.emit('youLose');
+          }
         }
       }
     });
@@ -121,15 +96,18 @@ io.sockets.on('connection', function (socket) {
       socket.emit('miss', targetedCell);
       socket.broadcast.emit('gotMissed', targetedCell);
     } else if (miss===false) {
+      console.log('Hit!');
       socket.emit('hit', targetedCell);
       socket.broadcast.emit('gotHit', targetedCell);
-      console.log('Hit!');
     }
+  }
 
-    // if (hitCount >= cellCount) {
-    //   socket.emit('you win');
-    //   socket.broadcast.emit('you lose');
-    // }
+  function cellAlreadyTaken(targetedCell, targetedCells) {
+    if (isInArray(targetedCell, targetedCells)) {
+      socket.emit('cellAlreadyTaken');
+      return true;
+    }
+    return false;
   }
 
   function isInArray(value, array) {
