@@ -19,5 +19,9 @@ module.exports = {
     socket.emit('youWin');
     socket.broadcast.emit('youLose');
   },
+
+  alreadyTaken: function(socket) {
+    socket.emit('cellAlreadyTaken');
+  }
   
 }

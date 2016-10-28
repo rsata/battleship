@@ -62,7 +62,7 @@ module.exports = function (socket, targetedCell, board, sio) {
     if (isInArray(targetedCell, targetedCells)) {
       console.log('Cell already targeted')
 
-      socket.emit('cellAlreadyTaken');
+      sio.alreadyTaken(socket);
       return true;
     }
     return false;

@@ -1,6 +1,6 @@
 var chai = require('chai');
 var expect = require('chai').expect;
-var checkMove = require('../check-move');
+var check = require('../check');
 // var io = require('socket.io-client')
 
 var board = [
@@ -50,7 +50,7 @@ describe('check move function', function() {
 
   it('hit count should increment', function() {    
     var input = board[1].hitCount;
-    var output = checkMove(socket, 23, board[0]);
+    var output = checkMove(socket, 23, board[0], sio);
     expect(input).to.equal(output[0].hitCount-1);
   }); 
 
