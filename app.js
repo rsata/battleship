@@ -40,6 +40,7 @@ io.sockets.on('connection', function (socket) {
       console.log('sorry, max players is 2');
       socket.emit('shutdown')
     } else {
+      
       // If not too many players, add board
       board.push({
         id: socket.id,
@@ -69,7 +70,7 @@ io.sockets.on('connection', function (socket) {
 
     // Set last move to player that just moved
     lastMoved = socket.id;
-  })
+  });
 });
 
 
