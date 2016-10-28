@@ -1,6 +1,7 @@
 var chai = require('chai');
 var expect = require('chai').expect;
-var checkMove = require('../checkMove');
+var checkMove = require('../check-move');
+// var io = require('socket.io-client')
 
 var board = [
   {
@@ -45,24 +46,28 @@ var board = [
 ];
 
 
-var io = require('socket.io-client')
-
 describe('check move function', function() {
 
-  it('hit count should increment', function() {
-    var socket = io.connect('http://localhost:3000', {
-      'reconnection delay' : 0,
-      'reopen delay' : 0,
-      'force new connection' : true
-    });
-
-    socket.on('connect', function () {
-      console.log('connection successful');
-      var input = board[1].hitCount;
-      var output = checkMove(socket, 23, board[0]);
-      expect(input).to.equal(output[0].hitCount-1);      
-    });
+  it('hit count should increment', function() {    
+    var input = board[1].hitCount;
+    var output = checkMove(socket, 23, board[0]);
+    expect(input).to.equal(output[0].hitCount-1);
   }); 
+
+  // it('hit count should increment', function() {
+  //   var socket = io.connect('http://localhost:3000', {
+  //     'reconnection delay' : 0,
+  //     'reopen delay' : 0,
+  //     'force new connection' : true
+  //   });
+
+  //   socket.on('connect', function () {
+  //     console.log('connection successful');
+  //     var input = board[1].hitCount;
+  //     var output = checkMove(socket, 23, board[0]);
+  //     expect(input).to.equal(output[0].hitCount-1);      
+  //   });
+  // }); 
 
   // it('yaya', function() {
   //   var io = require('socket.io-client');

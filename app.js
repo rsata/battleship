@@ -7,7 +7,9 @@ var port = 3000;
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-var checkMove = require('./checkMove');
+// var checkMove = require('./checkMove');
+var checkMove = require('./check');
+var sio = require('./socket-events');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -61,9 +63,9 @@ io.sockets.on('connection', function (socket) {
 
     // if player name matches first board, i.e. it is their own board, check the other board
     if (socket.id === board[0].id) {
-      checkMove(socket, data, board[1]);
+      checkMove(socket, data, board[1], sio);
     } else {
-      checkMove(socket, data, board[0]);
+      checkMove(socket, data, board[0], sio);
     }
 
     // Set last move to player that just moved
